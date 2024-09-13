@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    header{
+        height: 20%;
+        text-align:center;
+        font-size: 30px;
+        font-family: "微软雅黑";
+        background-color: aqua;
+    }
+    main{
+        height: 60%;
+        text-align:center;
+        font-size: 30px;
+        font-family: "微软雅黑";
+        background-color:aquamarine;
+    }
+    footer{
+        height:20%;
+        text-align:center;
+        font-size:30px;
+        font-family:"微软雅黑";
+        background-color:azure;
+    }
+</style>
+</head>
+<body>
+    <header>
+        yesterday!
+    </header>
+    <main>
+        today!
+    </main>
+    <footer>
+        tomorrow!
+        <script>
+            var a=Date.now();
+            document.body.style.height=innerHeight-20+'px';
+            var b=Date.now();
+            console.log("运行了"+(b-a)+"毫秒");
+        </script>
+    </footer>
+</body>
+</html>
