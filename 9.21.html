@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    header{
+        height: 30%;
+        text-align:center;
+        font-size: 30px;
+        font-family: "微软雅黑";
+        background-color: aqua;
+    }
+    main{
+        height: 60%;
+        text-align:center;
+        font-size: 30px;
+        font-family: "微软雅黑";
+        background-color:aquamarine;
+    }
+    footer{
+        height:10%;
+        text-align:center;
+        font-size:30px;
+        font-family:"微软雅黑";
+        background-color:azure;
+    }
+    p{
+            border: 1px solid blue;
+            margin:0%;
+            height:33%;
+        }
+</style>
+</head>
+<body>
+    <header>
+        yesterday!
+    </header>
+    <main>
+        <p id="word">abandon</p>
+        <p id="pron">/ə'bændən/</p>
+        <p id="chinese">vt.离弃,丢弃;遗弃,抛弃;放弃</p>
+    </main>
+    <footer>
+        tomorrow!
+        <script>
+            document.body.style.height=innerHeight-20+'px';
+        </script>
+    </footer>
+    <script>
+     let strCET6 = '' ;
+     let arrCET6 = [] ;
+     fetch('cet6.txt')
+     .then(res => res.text())
+     .then(txt => {
+                   strCET6 = txt ;
+                   arrCET6 =  strCET6.split('\r\n') ;
+                   let rand = Math.floor(arrCET6.length * Math.random() ) ;
+                   let cetWord = arrCET6[rand] ;
+                   let begin = cetWord.indexOf('\t') ;
+                   let end =  cetWord.lastIndexOf('\t') ;
+                   let word = cetWord.slice(0,begin) ;
+                   let pron = cetWord.slice(begin+1,end) ;
+                   let chinese = cetWord.slice(end+1) ;
+                      select('#word').textContent = word ;
+                      select('#pron').textContent = pron ;
+                      select('#chinese').textContent =chinese ;
+                  }) ;
+     
+     function select(str){
+      let dom = document.querySelector(str);
+      return dom ;
+     }
+     </script>
+</body>
+</html>
