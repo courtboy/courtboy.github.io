@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 <style>
+    *{
+        box-sizing:border-box;
+    }
     header{
         height: 30%;
         text-align:center;
@@ -31,11 +34,38 @@
             margin:0%;
             height:33%;
         }
+    input{
+            height:30%;
+            width:20%;
+            margin:50px;
+        }
+
 </style>
+
 </head>
+<script>
+let Model = {} ;
+Model.cet6String = '' ;
+Model.CET6 = [] ;
+Model.cetUrl = ['text1.txt','text2.txt','text3.txt'];
+for(let i=0; i<Model.cetUrl.length; i++){
+    fetch(Model.cetUrl[i])
+    .then(res => res.text())
+    .then(txt => {
+        Model.cet6String += txt ;
+        UI.log('单词库：' + Model.cetUrl[i] + ' 加载成功!') ;       
+    });
+  } ;
+
+</script>
 <body>
     <header>
         yesterday!
+        <br>
+        <nav>
+            <button id="randWord">随机单词</button>
+            <button id="loadWord">读入单词</button>
+         </nav>
     </header>
     <main>
         <p id="word">abandon</p>
@@ -49,29 +79,38 @@
         </script>
     </footer>
     <script>
-     let strCET6 = '' ;
-     let arrCET6 = [] ;
-     fetch('cet6.txt')
-     .then(res => res.text())
-     .then(txt => {
-                   strCET6 = txt ;
-                   arrCET6 =  strCET6.split('\r\n') ;
-                   let rand = Math.floor(arrCET6.length * Math.random() ) ;
-                   let cetWord = arrCET6[rand] ;
-                   let begin = cetWord.indexOf('\t') ;
-                   let end =  cetWord.lastIndexOf('\t') ;
-                   let word = cetWord.slice(0,begin) ;
-                   let pron = cetWord.slice(begin+1,end) ;
-                   let chinese = cetWord.slice(end+1) ;
-                      select('#word').textContent = word ;
-                      select('#pron').textContent = pron ;
-                      select('#chinese').textContent =chinese ;
-                  }) ;
-     
-     function select(str){
-      let dom = document.querySelector(str);
-      return dom ;
-     }
-     </script>
+        let UI = {} ;
+         UI.log = function(s){
+         select('footer').textContent = s ;
+         } ;
+         UI.headerLog = function(s){
+         select('header').textContent = s ;
+         } ;
+         select('button#loadWord').onclick = function(){
+           Model.CET6 = Model.cet6String.split('\r\n') ;
+   
+           if(Model.CET6.length < 5000){
+               UI.log("单词没有完全读入，Please wait!");
+           }else{
+               UI.log("我已经读入了"+ Model.CET6.length + "单词!")
+           }
+           
+         } ;
+         select('button#randWord').onclick = function(){
+                   
+           if(Model.CET6.length < 5000){
+               UI.log("请点“读入单词”按钮");
+           }else{
+               let rand = Math.floor(Math.random() * Model.CET6.length) ;
+               UI.headerLog(Model.CET6[rand] ) ;
+               UI.log("我已经读入了"+ Model.CET6.length + "单词!")
+           }
+           
+         } ;
+        function select(selector){
+           let dom = document.querySelector(selector) ;
+           return dom ;
+         }
+       </script>
 </body>
 </html>
