@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    *{
+        box-sizing:border-box;
+    }
+    header{
+        height: 30%;
+        text-align:center;
+        font-size: 30px;
+        font-family: "微软雅黑";
+        background-color: aqua;
+    }
+    main{
+        height: 60%;
+        text-align:center;
+        font-size: 30px;
+        font-family: "微软雅黑";
+        background-color:aquamarine;
+    }
+    footer{
+        height:10%;
+        text-align:center;
+        font-size:30px;
+        font-family:"微软雅黑";
+        background-color:azure;
+    }
+    p{
+            border: 1px solid blue;
+            margin:0%;
+            height:33%;
+        }
+    button{
+        height:100px;
+        width:100px;
+        }
+
+</style>
+
+</head>
+<script>
+let Model = {} ;
+Model.cet6String = '' ;
+Model.CET6 = [] ;
+Model.cetUrl = ['text1.txt','text2.txt','text3.txt'];
+for(let i=0; i<Model.cetUrl.length; i++){
+    fetch(Model.cetUrl[i])
+    .then(res => res.text())
+    .then(txt => {
+        Model.cet6String += txt ;
+        UI.log('单词库：' + Model.cetUrl[i] + ' 加载成功!') ;       
+    });
+  } ;
+
+</script>
+<body>
+    <header>
+        yesterday!
+        <br>
+
+    </header>
+    <nav>
+    <button id="randWord">随机单词</button>
+    <button id="loadWord">读入单词</button>
+ </nav>
+    <main>
+        <p id="word">abandon</p>
+        <p id="pron">/ə'bændən/</p>
+        <p id="chinese">vt.离弃,丢弃;遗弃,抛弃;放弃</p>
+    </main>
+    <footer>
+        tomorrow!
+        <script>
+            document.body.style.height=innerHeight-20+'px';
+        </script>
+    </footer>
+    <script>
+        let UI = {} ;
+         UI.log = function(s){
+         select('footer').textContent = s ;
+         } ;
+         UI.headerLog = function(s){
+         select('header').textContent = s ;
+         } ;
+         select('button#loadWord').onclick = function(){
+           Model.CET6 = Model.cet6String.split('\r\n') ;
+   
+           if(Model.CET6.length < 5000){
+               UI.log("单词没有完全读入，Please wait!");
+           }else{
+               UI.log("我已经读入了"+ Model.CET6.length + "单词!")
+           }
+           
+         } ;
+         select('button#randWord').onclick = function(){
+                   
+           if(Model.CET6.length < 5000){
+               UI.log("请点“读入单词”按钮");
+           }else{
+               let rand = Math.floor(Math.random() * Model.CET6.length) ;
+               UI.headerLog(Model.CET6[rand] ) ;
+               UI.log("我已经读入了"+ Model.CET6.length + "单词!")
+           }
+           
+         } ;
+        function select(selector){
+           let dom = document.querySelector(selector) ;
+           return dom ;
+         }
+       </script>
+</body>
+</html>
